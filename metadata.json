@@ -1,0 +1,8 @@
+{
+  "name": "BTCLNT - Bitcoin L2 Infrastructure",
+  "description": "Complete Bitcoin Layer-2 Infrastructure Ecosystem featuring Lightning nodes, DePIN rewards, staking, and a comprehensive referral economy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

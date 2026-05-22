@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and state",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "walletAddress": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin", "ambassador"] },
+        "kycStatus": { "type": "string", "enum": ["none", "pending", "verified", "rejected"] },
+        "referralCode": { "type": "string" },
+        "referredBy": { "type": "string" },
+        "lntBalance": { "type": "number" },
+        "stakingBalance": { "type": "number" },
+        "nodeCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "walletAddress"]
+    },
+    "Node": {
+      "title": "Node",
+      "description": "Lightning node machine or license",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["lite", "pro", "enterprise"] },
+        "ownerId": { "type": "string" },
+        "status": { "type": "string", "enum": ["inventory", "reserved", "active", "offline"] },
+        "price": { "type": "number" },
+        "uptime": { "type": "number" },
+        "earnings": { "type": "number" },
+        "activatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "type"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "Node or LNT token purchase record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "nodeId": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
+        "txHash": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "amount"]
+    },
+    "Reward": {
+      "title": "Reward",
+      "description": "Earning event (Node, Referral, Staking)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["node_mining", "referral_bonus", "staking_yield"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["locked", "claimable", "claimed"] }
+      },
+      "required": ["id", "userId", "amount", "type"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Global user profiles"
+    },
+    "/nodes/{nodeId}": {
+      "schema": "Node",
+      "description": "Inventory and owned nodes"
+    },
+    "/purchases/{purchaseId}": {
+      "schema": "Purchase",
+      "description": "Transaction logs"
+    },
+    "/rewards/{rewardId}": {
+      "schema": "Reward",
+      "description": "System rewards"
+    }
+  }
+}
